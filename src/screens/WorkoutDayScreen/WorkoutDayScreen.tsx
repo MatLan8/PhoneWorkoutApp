@@ -1,4 +1,5 @@
-import { Text, View } from "react-native";
+import { ScrollView, View } from "react-native";
+import { Keyboard, Pressable } from "react-native";
 import { styles } from "./WorkoutDayScreen.styles";
 import ExerciseItem from "../../components/ExerciseItem/ExerciseItem";
 import { Exercise } from "../../types/Exercise";
@@ -18,11 +19,17 @@ const WorkoutDayScreen = ({ route }: any) => {
   }, [workoutDayId]);
 
   return (
-    <View style={styles.container}>
-      {exercises.map((exercise) => (
-        <ExerciseItem key={exercise.id} exercise={exercise} />
-      ))}
-    </View>
+    <Pressable style={{ flex: 1 }} onPress={Keyboard.dismiss}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.content}
+        keyboardShouldPersistTaps="handled"
+      >
+        {exercises.map((exercise) => (
+          <ExerciseItem key={exercise.id} exercise={exercise} />
+        ))}
+      </ScrollView>
+    </Pressable>
   );
 };
 
