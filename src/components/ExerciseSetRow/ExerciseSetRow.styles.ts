@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { scale } from "../../utils/scale";
+import { colors } from "../../styles/globalStyles";
 
 export const styles = StyleSheet.create({
   row: {
@@ -17,11 +18,12 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     paddingVertical: scale(10),
     paddingHorizontal: scale(24),
+    color: colors.text.primary,
   },
   label: {
     fontSize: scale(13),
     fontWeight: "bold",
-    color: "black",
+    color: colors.text.primary,
     marginLeft: scale(4),
   },
   statSeperator: {
@@ -29,5 +31,6 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     marginHorizontal: scale(8),
     alignSelf: "center",
+    color: colors.text.primary,
   },
 });
