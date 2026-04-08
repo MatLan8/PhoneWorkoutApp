@@ -1,8 +1,9 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createStackNavigator } from "@react-navigation/stack";
 
 import { initDatabase } from "./src/db/database";
 import {
@@ -16,7 +17,7 @@ import { colors } from "./src/styles/globalStyles";
 import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
 import WorkoutDayScreen from "./src/screens/WorkoutDayScreen/WorkoutDayScreen";
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 initDatabase();
 
@@ -27,24 +28,26 @@ export default function App() {
     NunitoSans_400Regular,
     NunitoSans_700Bold,
   });
-  if (!fontsLoaded) {
-    return null;
-  }
+
+  if (!fontsLoaded) return null;
+
   return (
-    <>
+    <SafeAreaProvider>
+      <StatusBar style="light" translucent={true} />
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName="Home"
           screenOptions={{
-            contentStyle: { backgroundColor: colors.bg.primary },
+            cardStyle: { backgroundColor: colors.bg.primary },
+            animation: "none",
+            headerShown: false,
           }}
         >
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="WorkoutDay" component={WorkoutDayScreen} />
         </Stack.Navigator>
       </NavigationContainer>
-      <StatusBar style="auto" />
-    </>
+    </SafeAreaProvider>
   );
 }
 
@@ -52,7 +55,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
   },
 });
