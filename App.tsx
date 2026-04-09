@@ -16,6 +16,7 @@ import { colors } from "./src/styles/globalStyles";
 
 import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
 import WorkoutDayScreen from "./src/screens/WorkoutDayScreen/WorkoutDayScreen";
+import StatsScreen from "./src/screens/StatsScreen/StatsScreen";
 
 const Stack = createStackNavigator();
 
@@ -45,6 +46,7 @@ export default function App() {
         >
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="WorkoutDay" component={WorkoutDayScreen} />
+          <Stack.Screen name="Stats" component={StatsScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

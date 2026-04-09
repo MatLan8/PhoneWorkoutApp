@@ -40,7 +40,7 @@ const LiquidGlass: React.FC<LiquidGlassProps> = ({
           source={noiseImage}
           style={StyleSheet.absoluteFill}
           resizeMode="stretch"
-          imageStyle={{ opacity: 0.1 }}
+          imageStyle={{ opacity: 0.15 }}
         />
       )}
 

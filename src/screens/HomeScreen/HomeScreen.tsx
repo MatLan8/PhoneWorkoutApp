@@ -1,4 +1,4 @@
-import { Button } from "react-native";
+import { Button, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useEffect } from "react";
 import React from "react";
@@ -32,6 +32,7 @@ const HomeScreen = ({ navigation }: any) => {
         />
       ))}
 
+      <Button title="Stats" onPress={() => navigation.navigate("Stats")} />
       <Button title="Edit Workout Day" onPress={() => setSheetVisible(true)} />
 
       <EditWorkoutDayBottomSheet
