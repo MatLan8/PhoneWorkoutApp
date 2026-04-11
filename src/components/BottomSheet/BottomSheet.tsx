@@ -136,7 +136,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
         ]}
       >
         {/* Header */}
-        <LiquidGlass style={{ flex: 1, padding: 4 }}>
+        <LiquidGlass style={{ flex: 1, padding: 40 }}>
           <View style={styles.header}>
             <View style={styles.handle} />
             {title && <Text style={styles.title}>{title}</Text>}

@@ -1,37 +1,45 @@
-// app/StatsScreen.tsx
-import { useImage } from "@shopify/react-native-skia";
-import { Text, StyleSheet, View, ScrollView } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
+import { useWindowDimensions } from "react-native";
 import {
   LiquidGlassScreen,
   GlassCard,
-} from "../../components/LiquidGlassScreen";
-export default function StatsScreen() {
-  const bg = useImage(require("../../../assets/nature2.png"));
+} from "../components/LiquidGlassScreenShader";
+
+import { useAnimatedMeshGradient } from "../reactitcx_Components/AnimatedMeshgradient/useAnimatedMeshGradient";
+
+export default function TestScreen() {
+  const { width, height } = useWindowDimensions();
+
+  // ─── Animated background shader ────────────────────────────────
+  const { shader, uniforms } = useAnimatedMeshGradient({
+    width,
+    height,
+    speed: 0.3,
+    noise: 0.15,
+    blur: 0.4,
+    contrast: 0,
+  });
 
   return (
     <LiquidGlassScreen
-      backgroundImage={bg}
-      zoomStrength={0.3} // 0.05 subtle → 0.3 strong
-      blurSpread={0.9} // 0.2 sharp → 1.0 very blurry
+      backgroundShader={shader}
+      backgroundUniforms={uniforms}
+      zoomStrength={0.15}
+      blurSpread={1}
     >
-      {/* Normal flex layout — no hardcoded positions */}
       <View style={s.scroll}>
-        {/* Only elements wrapped in GlassCard get the glass effect */}
         <GlassCard style={s.card}>
           <Text style={s.title}>Profile</Text>
           <Text style={s.body}>Glass card with real distortion</Text>
         </GlassCard>
 
-        {/* This text has NO glass — just renders normally over the background */}
         <Text style={s.plainText}>Regular text, no glass</Text>
-        <View style={s.normal}></View>
 
         <GlassCard style={s.card}>
           <Text style={s.title}>Stats</Text>
           <Text style={s.body}>Another wrapped card</Text>
         </GlassCard>
 
-        {/* You can put anything inside — Views, images, other components */}
         <GlassCard style={[s.card, s.wideCard]}>
           <View style={s.row}>
             <View style={s.stat}>
@@ -71,58 +79,16 @@ export default function StatsScreen() {
 }
 
 const s = StyleSheet.create({
-  scroll: {
-    padding: 24,
-    gap: 16,
-    paddingTop: 60,
-  },
-  card: {
-    padding: 20,
-    borderRadius: 16,
-    // No background needed — glass effect comes from shader
-  },
-  wideCard: {
-    padding: 24,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "700",
-    color: "#fff",
-    marginBottom: 6,
-  },
-  body: {
-    fontSize: 14,
-    color: "rgba(255,255,255,0.85)",
-  },
-  plainText: {
-    color: "#fff",
-    fontSize: 16,
-    textAlign: "center",
-    opacity: 0.7,
-  },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-  stat: {
-    alignItems: "center",
-  },
-  statNum: {
-    fontSize: 22,
-    fontWeight: "700",
-    color: "#fff",
-  },
-  statLabel: {
-    fontSize: 12,
-    color: "rgba(255,255,255,0.7)",
-    marginTop: 2,
-  },
-  normal: {
-    backgroundColor: "red",
-    width: 50,
-    height: 50,
-  },
-  narrowCard: {
-    width: 200,
-  },
+  scroll: { padding: 24, gap: 16, paddingTop: 60 },
+  card: { padding: 20, borderRadius: 16 },
+  wideCard: { padding: 24 },
+  title: { fontSize: 20, fontWeight: "700", color: "#fff", marginBottom: 6 },
+  body: { fontSize: 14, color: "rgba(255,255,255,0.85)" },
+  plainText: { color: "#fff", fontSize: 16, textAlign: "center", opacity: 0.7 },
+  row: { flexDirection: "row", justifyContent: "space-around" },
+  stat: { alignItems: "center" },
+  statNum: { fontSize: 22, fontWeight: "700", color: "#fff" },
+  statLabel: { fontSize: 12, color: "rgba(255,255,255,0.7)", marginTop: 2 },
+  normal: { backgroundColor: "red", width: 50, height: 50 },
+  narrowCard: { width: 200 },
 });
