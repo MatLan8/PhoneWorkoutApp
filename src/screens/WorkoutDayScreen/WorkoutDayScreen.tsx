@@ -2,6 +2,7 @@ import { ScrollView, View } from "react-native";
 import { Keyboard, Pressable } from "react-native";
 import { styles } from "./WorkoutDayScreen.styles";
 import ExerciseItem from "../../components/ExerciseItem/ExerciseItem";
+import ExerciseAccordion from "../../components/ExerciseAccordion/ExerciseAccordion";
 import { Exercise } from "../../types/Exercise";
 import { useState, useEffect } from "react";
 
@@ -26,7 +27,7 @@ const WorkoutDayScreen = ({ route }: any) => {
         keyboardShouldPersistTaps="handled"
       >
         {exercises.map((exercise) => (
-          <ExerciseItem key={exercise.id} exercise={exercise} />
+          <ExerciseAccordion key={exercise.id} exercise={exercise} />
         ))}
       </ScrollView>
     </Pressable>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Pressable, View, Text } from "react-native";
 import Animated, {
   useSharedValue,
@@ -8,14 +8,49 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 
+import { Exercise, ExerciseSet } from "../../types/Exercise";
+import { getExerciseSetsByExerciseId } from "../../db/exercise.repository";
+import ExerciseSetRow from "../ExerciseSetRow/ExerciseSetRow";
+
 import { styles } from "./ExerciseAccordion.styles";
 
 const DURATION = 600;
-const MAX_HEIGHT = 500; // set higher than your content will ever be
+const MAX_HEIGHT = 1000; // set higher than your content will ever be
 
-export default function ExerciseAccordion() {
+type SetRow = ExerciseSet & {
+  weightInput: string;
+  repsInput: string;
+  setsInput: string;
+};
+
+const ExerciseAccordion = ({ exercise }: { exercise: Exercise }) => {
   const [isOpen, setIsOpen] = useState(false);
   const progress = useSharedValue(0);
+
+  const [sets, setSets] = useState<SetRow[]>([]);
+
+  useEffect(() => {
+    const data = getExerciseSetsByExerciseId(exercise.id);
+    setSets(
+      data.map((s) => ({
+        ...s,
+        weightInput: s.weight.toString(),
+        repsInput: s.reps.toString(),
+        setsInput: s.sets.toString(),
+      })),
+    );
+  }, [exercise.id]);
+
+  const handleChange = (
+    id: number,
+    field: keyof Pick<ExerciseSet, "weight" | "reps" | "sets">,
+    value: string,
+  ) => {
+    const numeric = value.replace(/[^0-9.]/g, "");
+    setSets((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, [`${field}Input`]: numeric } : s)),
+    );
+  };
 
   const toggle = () => {
     const next = !isOpen;
@@ -50,33 +85,22 @@ export default function ExerciseAccordion() {
           pressed && styles.triggerPressed,
         ]}
       >
-        {/* ┌─ PUT YOUR CLOSED/HEADER CONTENT HERE ─────────────────────── */}
-        <Text>Accordion</Text>
-        {/* └────────────────────────────────────────────────────────────── */}
+        <Text style={styles.headerText}>{exercise.name}</Text>
 
         <Animated.View style={[styles.chevron, animatedChevronStyle]} />
       </Pressable>
 
       {/* ── EXPANDED CONTENT ──────────────────────────────────────────── */}
       <Animated.View style={animatedContentStyle}>
-        {/* ┌─ PUT YOUR OPENED/EXPANDED CONTENT HERE ─────────────────── */}
         <View style={styles.content}>
-          <Text>Accordion open</Text>
-          <Text>Accordion open</Text>
-          <Text>Accordion open</Text>
-          <Text>Accordion open</Text>
-          <Text>Accordion open</Text>
-          <Text>Accordion open</Text>
-          <Text>Accordion open</Text>
-          <Text>Accordion open</Text>
-          <Text>Accordion open</Text>
-          <Text>Accordion open</Text>
-          <Text>Accordion open</Text>
-          <Text>Accordion open</Text>
-          <Text>Accordion open</Text>
+          <View style={styles.breakLine} />
+          {sets.map((set) => (
+            <ExerciseSetRow key={set.id} set={set} onChange={handleChange} />
+          ))}
         </View>
-        {/* └────────────────────────────────────────────────────────────── */}
       </Animated.View>
     </View>
   );
-}
+};
+
+export default ExerciseAccordion;
