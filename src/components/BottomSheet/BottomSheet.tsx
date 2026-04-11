@@ -9,8 +9,6 @@ import {
   View,
 } from "react-native";
 import { styles } from "./BottomSheet.styles";
-import LiquidGlassBackground from "../LiquidGlassBackground ";
-import LiquidGlass from "../LiquidGlassBackground ";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
@@ -136,14 +134,14 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
         ]}
       >
         {/* Header */}
-        <LiquidGlass style={{ flex: 1, padding: 40 }}>
+        <View style={{ flex: 1, padding: 40, backgroundColor: "red" }}>
           <View style={styles.header}>
             <View style={styles.handle} />
             {title && <Text style={styles.title}>{title}</Text>}
           </View>
           {/* Content */}
           <View style={styles.content}>{children}</View>
-        </LiquidGlass>
+        </View>
       </Animated.View>
     </View>
   );
