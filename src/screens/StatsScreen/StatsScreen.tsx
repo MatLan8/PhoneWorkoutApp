@@ -10,7 +10,6 @@ const StatsScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.text}>StatsScreen</Text>
-      <ExerciseAccordion />
     </SafeAreaView>
   );
 };

@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
@@ -15,6 +15,8 @@ import {
   NunitoSans_400Regular,
   NunitoSans_700Bold,
 } from "@expo-google-fonts/nunito-sans";
+
+import { NavigationBar } from "@zoontek/react-native-navigation-bar";
 
 const Stack = createStackNavigator();
 
@@ -32,11 +34,21 @@ export default function App() {
 
   return (
     <GestureHandlerRootView
-      style={{ flex: 1, backgroundColor: "colors.bg.primary" }}
+      style={{ flex: 1, backgroundColor: colors.bg.primary }} // ← removed quotes
     >
       <SafeAreaProvider>
         <StatusBar style="light" translucent />
-        <NavigationContainer>
+        <NavigationBar barStyle="light-content" />
+        <NavigationContainer
+          theme={{
+            ...DarkTheme,
+            colors: {
+              ...DarkTheme.colors,
+              background: colors.bg.primary,
+              card: colors.bg.primary,
+            },
+          }}
+        >
           <TabNavigator />
         </NavigationContainer>
       </SafeAreaProvider>
