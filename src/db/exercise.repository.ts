@@ -205,3 +205,83 @@ export function updateExerciseSets(
     statement.finalizeSync();
   }
 }
+// ─── Merged ────────────────────────────────────────────────────────────────
+
+type WorkoutDayRow = {
+  exercise_id: number;
+  exercise_name: string;
+  notes: string | null;
+  exercise_position: number;
+
+  set_id: number | null;
+  weight: number | null;
+  reps: number | null;
+  sets: number | null;
+  set_position: number | null;
+};
+
+type ExerciseWithSets = {
+  id: number;
+  name: string;
+  notes: string | null;
+  position: number;
+  sets: {
+    id: number;
+    weight: number;
+    reps: number;
+    sets: number;
+    position: number;
+  }[];
+};
+
+export const getWorkoutDayFull = (workoutDayId: number): ExerciseWithSets[] => {
+  const rows = db.getAllSync(
+    `
+    SELECT 
+      e.id AS exercise_id,
+      e.name AS exercise_name,
+      e.notes,
+      e.position AS exercise_position,
+
+      s.id AS set_id,
+      s.weight,
+      s.reps,
+      s.sets,
+      s.position AS set_position
+
+    FROM exercises e
+    LEFT JOIN exercise_sets s
+      ON e.id = s.exercise_id
+
+    WHERE e.workout_day_id = ?
+    ORDER BY e.position, s.position
+    `,
+    [workoutDayId],
+  ) as WorkoutDayRow[];
+
+  const map = new Map<number, ExerciseWithSets>();
+
+  for (const row of rows) {
+    if (!map.has(row.exercise_id)) {
+      map.set(row.exercise_id, {
+        id: row.exercise_id,
+        name: row.exercise_name,
+        notes: row.notes,
+        position: row.exercise_position,
+        sets: [],
+      });
+    }
+
+    if (row.set_id != null) {
+      map.get(row.exercise_id)!.sets.push({
+        id: row.set_id,
+        weight: row.weight ?? 0,
+        reps: row.reps ?? 0,
+        sets: row.sets ?? 1,
+        position: row.set_position ?? 0,
+      });
+    }
+  }
+
+  return Array.from(map.values());
+};

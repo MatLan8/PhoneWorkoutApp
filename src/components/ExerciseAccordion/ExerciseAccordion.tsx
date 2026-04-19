@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Pressable, View, Text } from "react-native";
 import Animated, {
   useSharedValue,
@@ -8,49 +8,29 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 
-import { Exercise, ExerciseSet } from "../../types/Exercise";
-import { getExerciseSetsByExerciseId } from "../../db/exercise.repository";
+import { ExerciseWithSets } from "../../types/ExerciseWithSets";
 import ExerciseSetRow from "../ExerciseSetRow/ExerciseSetRow";
-
 import { styles } from "./ExerciseAccordion.styles";
 
 const DURATION = 600;
-const MAX_HEIGHT = 1000; // set higher than your content will ever be
+const MAX_HEIGHT = 1000;
 
-type SetRow = ExerciseSet & {
-  weightInput: string;
-  repsInput: string;
-  setsInput: string;
-};
-
-const ExerciseAccordion = ({ exercise }: { exercise: Exercise }) => {
+const ExerciseAccordion = ({
+  exercise,
+  dragHandle,
+  onSetChange, // 👈 IMPORTANT
+}: {
+  exercise: ExerciseWithSets;
+  dragHandle?: React.ReactNode;
+  onSetChange: (
+    exerciseId: number,
+    setId: number,
+    field: "weight" | "reps" | "sets",
+    value: string,
+  ) => void;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const progress = useSharedValue(0);
-
-  const [sets, setSets] = useState<SetRow[]>([]);
-
-  useEffect(() => {
-    const data = getExerciseSetsByExerciseId(exercise.id);
-    setSets(
-      data.map((s) => ({
-        ...s,
-        weightInput: s.weight.toString(),
-        repsInput: s.reps.toString(),
-        setsInput: s.sets.toString(),
-      })),
-    );
-  }, [exercise.id]);
-
-  const handleChange = (
-    id: number,
-    field: keyof Pick<ExerciseSet, "weight" | "reps" | "sets">,
-    value: string,
-  ) => {
-    const numeric = value.replace(/[^0-9.]/g, "");
-    setSets((prev) =>
-      prev.map((s) => (s.id === id ? { ...s, [`${field}Input`]: numeric } : s)),
-    );
-  };
 
   const toggle = () => {
     const next = !isOpen;
@@ -77,7 +57,7 @@ const ExerciseAccordion = ({ exercise }: { exercise: Exercise }) => {
 
   return (
     <View style={styles.container}>
-      {/* ── TRIGGER ROW ───────────────────────────────────────────────── */}
+      {/* HEADER */}
       <Pressable
         onPress={toggle}
         style={({ pressed }) => [
@@ -85,17 +65,24 @@ const ExerciseAccordion = ({ exercise }: { exercise: Exercise }) => {
           pressed && styles.triggerPressed,
         ]}
       >
+        <View style={styles.dragHandle}>{dragHandle}</View>
         <Text style={styles.headerText}>{exercise.name}</Text>
 
         <Animated.View style={[styles.chevron, animatedChevronStyle]} />
       </Pressable>
 
-      {/* ── EXPANDED CONTENT ──────────────────────────────────────────── */}
+      {/* CONTENT */}
       <Animated.View style={animatedContentStyle}>
         <View style={styles.content}>
           <View style={styles.breakLine} />
-          {sets.map((set) => (
-            <ExerciseSetRow key={set.id} set={set} onChange={handleChange} />
+
+          {exercise.sets.map((set) => (
+            <ExerciseSetRow
+              key={set.id}
+              set={set}
+              onChange={onSetChange}
+              exerciseId={exercise.id}
+            />
           ))}
         </View>
       </Animated.View>

@@ -5,8 +5,8 @@ export const styles = StyleSheet.create({
     flex: 1,
     marginTop: 50,
   },
-  content: {
-    flexDirection: "column",
+  itemWrapper: {
+    width: "100%",
     alignItems: "center",
   },
 });

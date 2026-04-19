@@ -59,4 +59,8 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.text.primary,
     marginBottom: scale(20),
   },
+  dragHandle: {
+    paddingHorizontal: 10,
+    justifyContent: "center",
+  },
 });
