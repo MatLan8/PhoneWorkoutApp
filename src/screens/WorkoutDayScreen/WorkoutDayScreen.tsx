@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, Keyboard, Pressable } from "react-native";
-import DraggableFlatList from "react-native-draggable-flatlist";
+import { View, Keyboard, Pressable, ScrollView } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { styles } from "./WorkoutDayScreen.styles";
@@ -14,17 +13,11 @@ const WorkoutDayScreen = ({ route }: any) => {
   const [exercises, setExercises] = useState<ExerciseWithSets[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // ── LOAD DATA ONCE ─────────────────────────────────────────────
   useEffect(() => {
     const data = getWorkoutDayFull(workoutDayId);
     setExercises(data);
     setLoading(false);
   }, [workoutDayId]);
-
-  // ── DRAG END HANDLER ───────────────────────────────────────────
-  const handleDragEnd = useCallback(({ data }: any) => {
-    setExercises(data);
-  }, []);
 
   const handleSetChange = (
     exerciseId: number,
@@ -51,42 +44,23 @@ const WorkoutDayScreen = ({ route }: any) => {
     );
   };
 
-  // ── RENDER ITEM (memo-safe) ────────────────────────────────────
-  const renderItem = useCallback(({ item, drag, isActive }: any) => {
-    return (
-      <View style={{ width: "100%", alignItems: "center" }}>
-        <ExerciseAccordion
-          exercise={item}
-          dragHandle={
-            <Pressable onLongPress={drag} delayLongPress={150} hitSlop={12}>
-              <MaterialCommunityIcons
-                name="drag-vertical-variant"
-                size={22}
-                color="#999"
-              />
-            </Pressable>
-          }
-          onSetChange={handleSetChange}
-        />
-      </View>
-    );
-  }, []);
-
-  // ── LOADING GUARD ──────────────────────────────────────────────
   if (loading) return null;
 
   return (
     <Pressable style={{ flex: 1 }} onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <DraggableFlatList
-          data={exercises}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={renderItem}
-          onDragEnd={handleDragEnd}
-          activationDistance={10}
-          dragItemOverflow={true}
-        />
-      </View>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.content}
+        keyboardShouldPersistTaps="handled"
+      >
+        {exercises.map((exercise) => (
+          <ExerciseAccordion
+            key={exercise.id}
+            exercise={exercise}
+            onSetChange={handleSetChange}
+          />
+        ))}
+      </ScrollView>
     </Pressable>
   );
 };

@@ -17,11 +17,9 @@ const MAX_HEIGHT = 1000;
 
 const ExerciseAccordion = ({
   exercise,
-  dragHandle,
   onSetChange, // 👈 IMPORTANT
 }: {
   exercise: ExerciseWithSets;
-  dragHandle?: React.ReactNode;
   onSetChange: (
     exerciseId: number,
     setId: number,
@@ -65,7 +63,6 @@ const ExerciseAccordion = ({
           pressed && styles.triggerPressed,
         ]}
       >
-        <View style={styles.dragHandle}>{dragHandle}</View>
         <Text style={styles.headerText}>{exercise.name}</Text>
 
         <Animated.View style={[styles.chevron, animatedChevronStyle]} />
