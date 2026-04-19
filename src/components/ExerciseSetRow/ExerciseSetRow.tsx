@@ -1,6 +1,8 @@
-import React from "react";
-import { View, TextInput, Text } from "react-native";
+import React, { useState } from "react";
+import { View, TextInput, Pressable } from "react-native";
 import { styles } from "./ExerciseSetRow.styles";
+import { Feather } from "@expo/vector-icons";
+import { colors } from "../../styles/globalStyles";
 
 type Props = {
   set: {
@@ -19,40 +21,77 @@ type Props = {
 };
 
 const ExerciseSetRow = ({ set, exerciseId, onChange }: Props) => {
+  const [focusedField, setFocusedField] = useState<
+    "weight" | "reps" | "sets" | null
+  >(null);
+
   return (
     <View style={styles.row}>
+      {/* WEIGHT */}
       <View style={styles.statContainter}>
         <TextInput
           style={styles.input}
           value={String(set.weight)}
           onChangeText={(v) => onChange(exerciseId, set.id, "weight", v)}
           keyboardType="numeric"
+          onFocus={() => setFocusedField("weight")}
+          onBlur={() => setFocusedField(null)}
         />
-        <Text style={styles.label}>kg</Text>
+        <View
+          style={[
+            styles.underline,
+            focusedField === "weight"
+              ? styles.underlineActive
+              : styles.underlineInactive,
+          ]}
+        />
       </View>
 
-      <Text style={styles.statSeperator}>|</Text>
-
+      {/* REPS */}
       <View style={styles.statContainter}>
         <TextInput
           style={styles.input}
           value={String(set.reps)}
           onChangeText={(v) => onChange(exerciseId, set.id, "reps", v)}
           keyboardType="numeric"
+          onFocus={() => setFocusedField("reps")}
+          onBlur={() => setFocusedField(null)}
         />
-        <Text style={styles.label}>reps</Text>
+        <View
+          style={[
+            styles.underline,
+            focusedField === "reps"
+              ? styles.underlineActive
+              : styles.underlineInactive,
+          ]}
+        />
       </View>
 
-      <Text style={styles.statSeperator}>|</Text>
-
+      {/* SETS */}
       <View style={styles.statContainter}>
         <TextInput
           style={styles.input}
           value={String(set.sets)}
           onChangeText={(v) => onChange(exerciseId, set.id, "sets", v)}
           keyboardType="numeric"
+          onFocus={() => setFocusedField("sets")}
+          onBlur={() => setFocusedField(null)}
         />
-        <Text style={styles.label}>sets</Text>
+        <View
+          style={[
+            styles.underline,
+            focusedField === "sets"
+              ? styles.underlineActive
+              : styles.underlineInactive,
+          ]}
+        />
+      </View>
+
+      {/* DELETE */}
+      <View style={styles.deleteCol}>
+        <Pressable>
+          <Feather name="x-circle" size={20} color={colors.text.primary} />
+        </Pressable>
       </View>
     </View>
   );

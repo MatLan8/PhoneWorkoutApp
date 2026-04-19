@@ -102,6 +102,7 @@ function seedDatabase() {
       { weight: 100, reps: 8, sets: 1 },
       { weight: 100, reps: 8, sets: 1 },
       { weight: 95, reps: 6, sets: 1 },
+      { weight: 90, reps: 5, sets: 1 },
     ]);
     seed(monday.id, "Incline Dumbbell Press", 2, [
       { weight: 50, reps: 10, sets: 1 },

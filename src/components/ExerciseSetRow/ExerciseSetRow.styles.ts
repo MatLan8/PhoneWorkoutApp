@@ -8,29 +8,37 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   statContainter: {
-    flexDirection: "row",
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    paddingBottom: scale(12),
   },
   input: {
     fontSize: scale(15),
     textAlign: "center",
-    paddingVertical: scale(10),
-    paddingHorizontal: scale(24),
     color: colors.text.primary,
+    includeFontPadding: false,
+    paddingVertical: 0,
+    paddingBottom: scale(3),
   },
-  label: {
-    fontSize: scale(13),
-    fontWeight: "bold",
-    color: colors.text.primary,
-    marginLeft: scale(4),
+  deleteCol: {
+    flex: 0.5,
+    alignItems: "flex-end",
+    justifyContent: "center",
+    paddingBottom: scale(12),
   },
-  statSeperator: {
-    fontSize: scale(16),
-    fontWeight: "bold",
-    marginHorizontal: scale(8),
-    alignSelf: "center",
-    color: colors.text.primary,
+
+  underline: {
+    height: scale(1),
+    width: "40%", // 👈 now THIS controls underline length safely
+    backgroundColor: colors.text.primary,
+  },
+
+  underlineActive: {
+    opacity: 1,
+  },
+
+  underlineInactive: {
+    opacity: 0,
   },
 });

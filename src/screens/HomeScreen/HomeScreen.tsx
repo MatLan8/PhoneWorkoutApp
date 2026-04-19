@@ -26,9 +26,7 @@ const HomeScreen = ({ navigation }: any) => {
           key={day.id}
           dayName={day.name}
           color={day.color}
-          onPress={() =>
-            navigation.navigate("WorkoutDay", { workoutDayId: day.id })
-          }
+          onPress={() => navigation.navigate("WorkoutDay", { workoutDay: day })}
         />
       ))}
 

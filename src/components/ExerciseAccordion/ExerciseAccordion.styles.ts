@@ -59,8 +59,19 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.text.primary,
     marginBottom: scale(20),
   },
-  dragHandle: {
-    paddingHorizontal: 10,
-    justifyContent: "center",
+  setsHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: scale(10),
+  },
+  statName: {
+    flex: 1,
+    textAlign: "center",
+    color: colors.text.primary,
+    fontSize: scale(15),
+    fontWeight: "bold",
+  },
+  emptyCol: {
+    flex: 0.5,
   },
 });

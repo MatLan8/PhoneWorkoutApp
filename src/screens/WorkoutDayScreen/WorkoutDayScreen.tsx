@@ -1,23 +1,26 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, Keyboard, Pressable, ScrollView } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { View, Text, Keyboard, Pressable, ScrollView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { styles } from "./WorkoutDayScreen.styles";
 import ExerciseAccordion from "../../components/ExerciseAccordion/ExerciseAccordion";
 import { ExerciseWithSets } from "../../types/ExerciseWithSets";
 import { getWorkoutDayFull } from "../../db/exercise.repository";
 
+import { CountupTimer } from "../../reactitcx_Components/CountUpTimer/CountupTimer";
+import { colors } from "../../styles/globalStyles";
+
 const WorkoutDayScreen = ({ route }: any) => {
-  const { workoutDayId } = route.params;
+  const { workoutDay } = route.params;
 
   const [exercises, setExercises] = useState<ExerciseWithSets[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const data = getWorkoutDayFull(workoutDayId);
+    const data = getWorkoutDayFull(workoutDay.id);
     setExercises(data);
     setLoading(false);
-  }, [workoutDayId]);
+  }, [workoutDay.id]);
 
   const handleSetChange = (
     exerciseId: number,
@@ -47,21 +50,36 @@ const WorkoutDayScreen = ({ route }: any) => {
   if (loading) return null;
 
   return (
-    <Pressable style={{ flex: 1 }} onPress={Keyboard.dismiss}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.content}
-        keyboardShouldPersistTaps="handled"
-      >
-        {exercises.map((exercise) => (
-          <ExerciseAccordion
-            key={exercise.id}
-            exercise={exercise}
-            onSetChange={handleSetChange}
-          />
-        ))}
-      </ScrollView>
-    </Pressable>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>{workoutDay.name}</Text>
+        <CountupTimer
+          isRunning={true}
+          initialSeconds={3590}
+          size="small"
+          customization={{
+            labelColor: colors.bg.primary,
+            numberColor: colors.bg.primary,
+            separatorColor: colors.bg.primary,
+          }}
+        />
+      </View>
+      <Pressable style={{ flex: 1 }} onPress={Keyboard.dismiss}>
+        <ScrollView
+          style={styles.exerciseContainer}
+          contentContainerStyle={styles.content}
+          keyboardShouldPersistTaps="handled"
+        >
+          {exercises.map((exercise) => (
+            <ExerciseAccordion
+              key={exercise.id}
+              exercise={exercise}
+              onSetChange={handleSetChange}
+            />
+          ))}
+        </ScrollView>
+      </Pressable>
+    </SafeAreaView>
   );
 };
 

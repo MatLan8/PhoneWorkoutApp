@@ -13,7 +13,7 @@ import ExerciseSetRow from "../ExerciseSetRow/ExerciseSetRow";
 import { styles } from "./ExerciseAccordion.styles";
 
 const DURATION = 600;
-const MAX_HEIGHT = 1000;
+const MAX_HEIGHT = 10000;
 
 const ExerciseAccordion = ({
   exercise,
@@ -72,7 +72,12 @@ const ExerciseAccordion = ({
       <Animated.View style={animatedContentStyle}>
         <View style={styles.content}>
           <View style={styles.breakLine} />
-
+          <View style={styles.setsHeader}>
+            <Text style={styles.statName}>Weight</Text>
+            <Text style={styles.statName}>Reps</Text>
+            <Text style={styles.statName}>Sets</Text>
+            <View style={styles.emptyCol} />
+          </View>
           {exercise.sets.map((set) => (
             <ExerciseSetRow
               key={set.id}
