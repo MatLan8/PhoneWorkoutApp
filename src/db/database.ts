@@ -8,6 +8,9 @@ export function initDatabase() {
     DROP TABLE IF EXISTS exercise_sets;
     DROP TABLE IF EXISTS exercises;
     DROP TABLE IF EXISTS workout_days;
+    DROP TABLE IF EXISTS workout_sessions;
+    DROP TABLE IF EXISTS session_exercises;
+    DROP TABLE IF EXISTS session_sets;
   `);
 
   db.execSync(`
@@ -37,6 +40,35 @@ export function initDatabase() {
       sets INTEGER NOT NULL DEFAULT 1,
       position INTEGER NOT NULL,
       FOREIGN KEY (exercise_id) REFERENCES exercises(id) ON DELETE CASCADE
+    );
+
+    CREATE TABLE IF NOT EXISTS workout_sessions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      workout_day_id INTEGER NOT NULL,
+      start_time INTEGER NOT NULL,
+      end_time INTEGER,
+      duration INTEGER,
+      status TEXT NOT NULL DEFAULT 'active',
+      FOREIGN KEY (workout_day_id) REFERENCES workout_days(id) ON DELETE CASCADE
+    );
+
+    CREATE TABLE IF NOT EXISTS session_exercises (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      session_id INTEGER NOT NULL,
+      exercise_id INTEGER NOT NULL,
+      name TEXT NOT NULL,
+      notes TEXT,
+      FOREIGN KEY (session_id) REFERENCES workout_sessions(id) ON DELETE CASCADE,
+      FOREIGN KEY (exercise_id) REFERENCES exercises(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS session_sets (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      session_exercise_id INTEGER NOT NULL,
+      sets INTEGER NOT NULL DEFAULT 1,
+      weight REAL NOT NULL DEFAULT 0,
+      reps INTEGER NOT NULL DEFAULT 0,
+      FOREIGN KEY (session_exercise_id) REFERENCES session_exercises(id) ON DELETE CASCADE
     );
   `);
 
