@@ -25,6 +25,19 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-sqlite", "expo-font"]
+    "plugins": [
+      "expo-sqlite",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/AvantGardeNormal.ttf",
+            "./assets/fonts/AvantGardeDemi.ttf",
+            "./node_modules/@expo-google-fonts/nunito-sans/400Regular/NunitoSans_400Regular.ttf",
+            "./node_modules/@expo-google-fonts/nunito-sans/700Bold/NunitoSans_700Bold.ttf"
+          ]
+        }
+      ]
+    ]
   }
 }

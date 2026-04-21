@@ -14,12 +14,6 @@ import { useColors } from "./src/themes/colors";
 import { AnimatedThemeProvider } from "./src/components/ThemeSwitch/AnimatedThemeProvider";
 
 import { initDatabase } from "./src/db/database";
-import {
-  useFonts,
-  NunitoSans_400Regular,
-  NunitoSans_700Bold,
-} from "@expo-google-fonts/nunito-sans";
-
 import { NavigationBar } from "@zoontek/react-native-navigation-bar";
 
 initDatabase();
@@ -34,17 +28,7 @@ export default function App() {
 
 function Root() {
   const colors = useColors();
-  const { mode } = useTheme(); // grab mode too
-  const [fontsLoaded] = useFonts({
-    AvantGardeNormal: require("./assets/fonts/AVGARDN_2.ttf"),
-    AvantGardeDemi: require("./assets/fonts/AVGARDD_2.ttf"),
-    NunitoSans_400Regular,
-    NunitoSans_700Bold,
-  });
-
-  if (!fontsLoaded) {
-    return null;
-  }
+  const { mode } = useTheme();
 
   return (
     <GestureHandlerRootView
