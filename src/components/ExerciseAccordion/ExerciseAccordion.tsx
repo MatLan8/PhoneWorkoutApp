@@ -8,9 +8,12 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 
+import { useMemo } from "react";
+import { useColors } from "../../themes/colors";
+import { createStyles } from "./ExerciseAccordion.styles";
+
 import { ExerciseWithSets } from "../../types/ExerciseWithSets";
 import ExerciseSetRow from "../ExerciseSetRow/ExerciseSetRow";
-import { styles } from "./ExerciseAccordion.styles";
 
 const DURATION = 600;
 const MAX_HEIGHT = 10000;
@@ -27,6 +30,8 @@ const ExerciseAccordion = ({
     value: string,
   ) => void;
 }) => {
+  const colors = useColors();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const [isOpen, setIsOpen] = useState(false);
   const progress = useSharedValue(0);
 

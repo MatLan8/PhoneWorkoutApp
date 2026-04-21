@@ -4,10 +4,12 @@ import WorkoutDayScreen from "../screens/WorkoutDayScreen/WorkoutDayScreen";
 import TestScreen from "../screens/TestScreen";
 import TestScreen2 from "../screens/TestScreen2";
 import { colors } from "../styles/globalStyles";
+import { useColors } from "../themes/colors";
 
 const Stack = createStackNavigator();
 
 export default function HomeStack() {
+  const colors = useColors();
   return (
     <Stack.Navigator
       screenOptions={{

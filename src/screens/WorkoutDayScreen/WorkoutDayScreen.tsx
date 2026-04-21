@@ -2,7 +2,10 @@ import React, { useEffect, useState, useCallback } from "react";
 import { View, Text, Keyboard, Pressable, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { styles } from "./WorkoutDayScreen.styles";
+import { useMemo } from "react";
+import { useColors } from "../../themes/colors";
+import { createStyles } from "./WorkoutDayScreen.styles";
+
 import ExerciseAccordion from "../../components/ExerciseAccordion/ExerciseAccordion";
 import { ExerciseWithSets } from "../../types/ExerciseWithSets";
 import { getWorkoutDayFull } from "../../db/exercise.repository";
@@ -10,7 +13,10 @@ import { getWorkoutDayFull } from "../../db/exercise.repository";
 import { CountupTimer } from "../../reactitcx_Components/CountUpTimer/CountupTimer";
 import { colors } from "../../styles/globalStyles";
 
+
 const WorkoutDayScreen = ({ route }: any) => {
+  const colors = useColors();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const { workoutDay } = route.params;
 
   const [exercises, setExercises] = useState<ExerciseWithSets[]>([]);

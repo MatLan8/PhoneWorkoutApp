@@ -3,6 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useEffect } from "react";
 import React from "react";
 import { styles } from "./HomeScreen.styles";
+import { useTheme } from "../../themes/ThemeContext";
 
 import WorkoutDayCard from "../../components/WorkoutDayCard/WorkoutDayCard";
 import EditWorkoutDayBottomSheet from "../../components/EditWorkoutDayBottomSheet/EditWorkoutDayBottomSheet";
@@ -11,9 +12,9 @@ import { getAllWorkoutDays } from "../../db/workout.repository";
 import { WorkoutDay } from "../../types/WorkoutDay";
 
 const HomeScreen = ({ navigation }: any) => {
+  const { setMode, setPalette } = useTheme();
   const [days, setDays] = useState<WorkoutDay[]>([]);
   const [sheetVisible, setSheetVisible] = useState(false); // control bottom sheet visibility
-  const [open, setOpen] = useState(false);
   useEffect(() => {
     const data = getAllWorkoutDays();
     setDays(data);
@@ -34,6 +35,12 @@ const HomeScreen = ({ navigation }: any) => {
       <Button title="Edit Workout Day" onPress={() => setSheetVisible(true)} />
       <Button title="Test" onPress={() => navigation.navigate("Test")} />
       <Button title="Test2" onPress={() => navigation.navigate("Test2")} />
+
+      <Button title="Dark" onPress={() => setMode("dark")} />
+      <Button title="Light" onPress={() => setMode("light")} />
+      <Button title="zinc" onPress={() => setPalette("zinc")} />
+      <Button title="emerald" onPress={() => setPalette("emerald")} />
+      <Button title="neutral" onPress={() => setPalette("neutral")} />
 
       <EditWorkoutDayBottomSheet
         visible={sheetVisible}
