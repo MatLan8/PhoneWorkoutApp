@@ -11,9 +11,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import TabNavigator from "./src/navigation/TabNavigator";
 import { useTheme } from "./src/themes/ThemeContext";
 import { useColors } from "./src/themes/colors";
-import { View, Text } from "react-native";
-
-import { ThemeProvider } from "./src/themes/ThemeContext";
+import { AnimatedThemeProvider } from "./src/components/ThemeSwitch/AnimatedThemeProvider";
 
 import { initDatabase } from "./src/db/database";
 import {
@@ -28,9 +26,9 @@ initDatabase();
 
 export default function App() {
   return (
-    <ThemeProvider defaultPalette="neutral" defaultMode="dark">
+    <AnimatedThemeProvider defaultPalette="neutral" defaultMode="dark">
       <Root />
-    </ThemeProvider>
+    </AnimatedThemeProvider>
   );
 }
 
@@ -47,13 +45,16 @@ function Root() {
   if (!fontsLoaded) {
     return null;
   }
+
   return (
     <GestureHandlerRootView
       style={{ flex: 1, backgroundColor: colors.bg.primary }}
     >
       <SafeAreaProvider>
         <StatusBar style={mode === "dark" ? "light" : "dark"} />
-        <NavigationBar barStyle="light-content" />
+        <NavigationBar
+          barStyle={mode === "dark" ? "light-content" : "dark-content"}
+        />
         <NavigationContainer
           theme={{
             ...(mode === "dark" ? DarkTheme : DefaultTheme),
