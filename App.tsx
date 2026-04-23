@@ -9,6 +9,7 @@ import {
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import TabNavigator from "./src/navigation/TabNavigator";
+import { ThemeSheetProvider } from "./src/themeSheet/ThemeSheetHost";
 import { useTheme } from "./src/themes/ThemeContext";
 import { useColors } from "./src/themes/colors";
 import { AnimatedThemeProvider } from "./src/components/ThemeSwitch/AnimatedThemeProvider";
@@ -35,22 +36,24 @@ function Root() {
       style={{ flex: 1, backgroundColor: colors.bg.primary }}
     >
       <SafeAreaProvider>
-        <StatusBar style={mode === "dark" ? "light" : "dark"} />
-        <NavigationBar
-          barStyle={mode === "dark" ? "light-content" : "dark-content"}
-        />
-        <NavigationContainer
-          theme={{
-            ...(mode === "dark" ? DarkTheme : DefaultTheme),
-            colors: {
-              ...(mode === "dark" ? DarkTheme.colors : DefaultTheme.colors),
-              background: colors.bg.primary,
-              card: colors.bg.primary,
-            },
-          }}
-        >
-          <TabNavigator />
-        </NavigationContainer>
+        <ThemeSheetProvider>
+          <StatusBar style={mode === "dark" ? "light" : "dark"} />
+          <NavigationBar
+            barStyle={mode === "dark" ? "light-content" : "dark-content"}
+          />
+          <NavigationContainer
+            theme={{
+              ...(mode === "dark" ? DarkTheme : DefaultTheme),
+              colors: {
+                ...(mode === "dark" ? DarkTheme.colors : DefaultTheme.colors),
+                background: colors.bg.primary,
+                card: colors.bg.primary,
+              },
+            }}
+          >
+            <TabNavigator />
+          </NavigationContainer>
+        </ThemeSheetProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

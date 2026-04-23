@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Workout Tracker",
+    "name": "Workout Tracker (Dev)",
     "slug": "PhoneWorkoutApp",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -20,7 +20,7 @@
         "backgroundColor": "#ffffff"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.PhoneWorkoutApp"
+      "package": "com.anonymous.PhoneWorkoutApp.dev"
     },
     "web": {
       "favicon": "./assets/favicon.png"
