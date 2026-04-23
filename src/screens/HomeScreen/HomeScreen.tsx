@@ -38,9 +38,9 @@ const HomeScreen = ({ navigation }: any) => {
 
       <Button title="Dark" onPress={() => setMode("dark")} />
       <Button title="Light" onPress={() => setMode("light")} />
-      <Button title="zinc" onPress={() => setPalette("zinc")} />
-      <Button title="emerald" onPress={() => setPalette("emerald")} />
-      <Button title="neutral" onPress={() => setPalette("neutral")} />
+      <Button title="Zinc" onPress={() => setPalette("Zinc")} />
+      <Button title="Emerald" onPress={() => setPalette("Emerald")} />
+      <Button title="Neutral" onPress={() => setPalette("Neutral")} />
 
       <EditWorkoutDayBottomSheet
         visible={sheetVisible}

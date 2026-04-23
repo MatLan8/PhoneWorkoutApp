@@ -21,7 +21,7 @@ initDatabase();
 
 export default function App() {
   return (
-    <AnimatedThemeProvider defaultPalette="neutral" defaultMode="dark">
+    <AnimatedThemeProvider defaultPalette="Neutral" defaultMode="dark">
       <Root />
     </AnimatedThemeProvider>
   );

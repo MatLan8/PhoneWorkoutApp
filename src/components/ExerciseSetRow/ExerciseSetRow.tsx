@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { View, TextInput, Pressable } from "react-native";
-import { styles } from "./ExerciseSetRow.styles";
+import { createStyles } from "./ExerciseSetRow.styles";
 import { Feather } from "@expo/vector-icons";
 import { colors } from "../../styles/globalStyles";
+import { useMemo } from "react";
+import { useColors } from "../../themes/colors";
 
 type Props = {
   set: {
@@ -24,6 +26,9 @@ const ExerciseSetRow = ({ set, exerciseId, onChange }: Props) => {
   const [focusedField, setFocusedField] = useState<
     "weight" | "reps" | "sets" | null
   >(null);
+
+  const colors = useColors();
+  const styles = useMemo(() => createStyles(colors), [colors]);
 
   return (
     <View style={styles.row}>

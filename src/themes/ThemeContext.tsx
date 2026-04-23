@@ -27,7 +27,7 @@ export const ThemeProvider = memo(
   ({
     children,
     defaultMode = "dark",
-    defaultPalette = "neutral",
+    defaultPalette = "Neutral",
   }: {
     children: React.ReactNode;
     defaultMode?: Mode;

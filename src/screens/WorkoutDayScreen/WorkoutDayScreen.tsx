@@ -108,26 +108,22 @@ const WorkoutDayScreen = ({ route }: any) => {
           {/* Switch palette */}
           <Pressable
             style={{ backgroundColor: "blue", width: 50, height: 50 }}
-            onPress={(e) =>
+            onPress={() =>
               toggleTheme({
                 themeType: "palette",
-                themeValue: "violet",
+                themeValue: "Violet",
                 animationType: AnimationType.Wipe,
-                touchX: e.nativeEvent.pageX,
-                touchY: e.nativeEvent.pageY,
               })
             }
           />
 
           <Pressable
             style={{ backgroundColor: "red", width: 50, height: 50 }}
-            onPress={(e) =>
+            onPress={() =>
               toggleTheme({
                 themeType: "palette",
-                themeValue: "neutral",
+                themeValue: "Neutral",
                 animationType: AnimationType.Wipe,
-                touchX: e.nativeEvent.pageX,
-                touchY: e.nativeEvent.pageY,
               })
             }
           />

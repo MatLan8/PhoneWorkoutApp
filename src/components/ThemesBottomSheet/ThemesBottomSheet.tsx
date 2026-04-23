@@ -14,7 +14,12 @@ import type {
 } from "../../reactitcx_Components/BottomSheet/types";
 
 import { useColors } from "../../themes/colors";
+import { useTheme } from "../../themes/ThemeContext";
 import { createStyles } from "./ThemesBottomSheet.styles";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { palettes, type PaletteName } from "../../themes/palettes";
+
+import { useToggleTheme, AnimationType } from "../../components/ThemeSwitch";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -28,33 +33,9 @@ export interface BottomSheetListProps {
   onClose?: () => void;
 }
 
-// ─── Data & rendering (customise here) ───────────────────────────────────────
+// ─── Data ────────────────────────────────────────────────────────────────────
 
-type Contact = { id: string; name: string; email: string };
-
-const CONTACTS: Contact[] = [
-  { id: "1", name: "Alice Johnson", email: "alice@example.com" },
-  { id: "2", name: "Bob Smith", email: "bob@example.com" },
-  { id: "3", name: "Carol White", email: "carol@example.com" },
-  { id: "4", name: "Alice Johnson", email: "alice@example.com" },
-  { id: "5", name: "Bob Smith", email: "bob@example.com" },
-  { id: "6", name: "Carol White", email: "carol@example.com" },
-  { id: "7", name: "Alice Johnson", email: "alice@example.com" },
-  { id: "8", name: "Bob Smith", email: "bob@example.com" },
-  { id: "9", name: "Carol White", email: "carol@example.com" },
-  { id: "10", name: "Alice Johnson", email: "alice@example.com" },
-  { id: "11", name: "Bob Smith", email: "bob@example.com" },
-  { id: "12", name: "Carol White", email: "carol@example.com" },
-  { id: "13", name: "Alice Johnson", email: "alice@example.com" },
-  { id: "14", name: "Bob Smith", email: "bob@example.com" },
-  { id: "15", name: "Carol White", email: "carol@example.com" },
-  { id: "16", name: "Alice Johnson", email: "alice@example.com" },
-  { id: "17", name: "Bob Smith", email: "bob@example.com" },
-  { id: "18", name: "Carol White", email: "carol@example.com" },
-  { id: "19", name: "Alice Johnson", email: "alice@example.com" },
-  { id: "20", name: "Bob Smith", email: "bob@example.com" },
-  { id: "21", name: "Carol White", email: "carol@example.com" },
-];
+const PALETTE_NAMES = Object.keys(palettes) as PaletteName[];
 
 // ─── Component ───────────────────────────────────────────────────────────────
 
@@ -68,20 +49,57 @@ export const ThemesBottomSheet = forwardRef<
     open: () => sheetRef.current?.snapToIndex(0),
     close: () => sheetRef.current?.close(),
   }));
-
+  const insets = useSafeAreaInsets();
   const colors = useColors();
+  const { setPalette } = useTheme();
+  //const styles = useMemo(() => createStyles(colors, insets), [colors, insets]);
   const styles = useMemo(() => createStyles(colors), [colors]);
 
+  const toggleTheme = useToggleTheme();
+
   const renderItem = useCallback(
-    ({ item }: { item: Contact }) => (
-      <Pressable onPress={() => console.log(item.name)}>
-        <View style={styles.item}>
-          <Text style={styles.name}>{item.name}</Text>
-          <Text style={styles.email}>{item.email}</Text>
-        </View>
-      </Pressable>
-    ),
-    [styles],
+    ({ item: paletteName }: { item: PaletteName }) => {
+      const palette = palettes[paletteName];
+      return (
+        <Pressable
+          style={{ width: "100%" }}
+          onPress={() =>
+            toggleTheme({
+              themeType: "palette",
+              themeValue: paletteName,
+              animationType: AnimationType.Wipe,
+            })
+          }
+        >
+          <View style={styles.itemWrap}>
+            <View
+              pointerEvents="none"
+              style={[
+                styles.itemShadow,
+                {
+                  backgroundColor: palette.dark11,
+                  opacity: 1,
+                },
+              ]}
+            />
+            <View
+              style={[
+                styles.item,
+                {
+                  backgroundColor: palette.dark2,
+                  borderColor: palette.dark9,
+                },
+              ]}
+            >
+              <Text style={[styles.paletteLabel, { color: palette.dark11 }]}>
+                {paletteName}
+              </Text>
+            </View>
+          </View>
+        </Pressable>
+      );
+    },
+    [styles, setPalette],
   );
 
   return (
@@ -94,9 +112,9 @@ export const ThemesBottomSheet = forwardRef<
       onClose={onClose}
     >
       <FlatList
-        data={CONTACTS}
+        data={PALETTE_NAMES}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item}
         contentContainerStyle={styles.list}
         showsVerticalScrollIndicator={false}
       />

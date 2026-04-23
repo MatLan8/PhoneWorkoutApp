@@ -13,8 +13,6 @@ const Tab = createBottomTabNavigator();
 
 function SafeCurvedBottomTabs(props: any) {
   const insets = useSafeAreaInsets();
-  console.log(insets);
-
   return (
     <View
       style={{

@@ -114,7 +114,7 @@ const ThemeSwitcherProvider = memo(({
 export const AnimatedThemeProvider = memo(({
   children,
   defaultMode = "dark",
-  defaultPalette = "neutral",
+  defaultPalette = "Neutral",
   onAnimationStart,
   onAnimationComplete,
 }: AnimatedThemeProviderProps) => (

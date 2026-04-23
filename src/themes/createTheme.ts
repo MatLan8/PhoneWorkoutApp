@@ -20,32 +20,31 @@ export const createTheme = (paletteName: PaletteName, mode: Mode) => {
     palette: paletteName,
 
     bg: {
-      primary: pick(palette, "50", "950", isDark),
-      secondary: pick(palette, "100", "900", isDark),
-      tertiary: pick(palette, "200", "800", isDark),
-      quaternary: pick(palette, "300", "700", isDark),
+      primary: pick(palette, "dark11", "dark1", isDark),
+      secondary: pick(palette, "dark10", "dark2", isDark),
+      tertiary: pick(palette, "dark9", "dark3", isDark),
     },
 
     text: {
-      primary: pick(palette, "950", "50", isDark),
-      secondary: pick(palette, "800", "200", isDark),
-      muted: pick(palette, "600", "400", isDark),
-      subtle: pick(palette, "500", "500", isDark),
+      primary: pick(palette, "dark1", "dark11", isDark),
+      secondary: pick(palette, "dark2", "dark10", isDark),
+      muted: pick(palette, "dark5", "dark7", isDark),
+      subtle: pick(palette, "dark6", "dark6", isDark),
     },
 
     ui: {
-      border: pick(palette, "200", "800", isDark),
-      divider: pick(palette, "300", "700", isDark),
-      disabled: pick(palette, "400", "600", isDark),
-      hover: pick(palette, "100", "900", isDark),
-      active: pick(palette, "200", "800", isDark),
+      border: pick(palette, "dark9", "dark3", isDark),
+      divider: pick(palette, "dark8", "dark4", isDark),
+      disabled: pick(palette, "dark7", "dark5", isDark),
+      hover: pick(palette, "dark10", "dark2", isDark),
+      active: pick(palette, "dark9", "dark3", isDark),
     },
 
     state: {
-      success: palettes.green[isDark ? 400 : 500],
-      warning: palettes.orange?.[isDark ? 400 : 500] ?? "#000",
-      error: palettes.red[isDark ? 400 : 500],
-      info: palettes.blue[isDark ? 400 : 500],
+      success: palettes.Green[isDark ? "dark7" : "dark6"],
+      warning: palettes.Orange[isDark ? "dark7" : "dark6"],
+      error: palettes.Red[isDark ? "dark7" : "dark6"],
+      info: palettes.Blue[isDark ? "dark7" : "dark6"],
     },
   };
 };
