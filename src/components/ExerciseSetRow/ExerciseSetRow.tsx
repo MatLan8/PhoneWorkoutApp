@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { View, TextInput, Pressable } from "react-native";
 import { createStyles } from "./ExerciseSetRow.styles";
 import { Feather } from "@expo/vector-icons";
-import { colors } from "../../styles/globalStyles";
 import { useMemo } from "react";
 import { useColors } from "../../themes/colors";
 

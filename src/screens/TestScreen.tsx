@@ -1,12 +1,14 @@
 import { Text, View, Pressable } from "react-native";
 import React from "react";
 import { useThemeSheet } from "../themeSheet/ThemeSheetHost";
+import ThemePicker from "../components/ThemePicker/ThemePicker";
 
 const TestScreen = () => {
   const { open } = useThemeSheet();
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, marginTop: 100 }}>
+      <ThemePicker />
       <Text>TestScreen</Text>
       <Pressable
         style={[
@@ -17,7 +19,6 @@ const TestScreen = () => {
             height: 100,
           },
         ]}
-        onPress={() => open()}
       >
         <Text>Open Sheet</Text>
       </Pressable>
