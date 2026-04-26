@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import type { StyleProp, ViewStyle } from "react-native";
-import type { Mode } from "../../themes/createTheme";
 import type { PaletteName } from "../../themes/palettes";
 
 export enum AnimationType {
@@ -38,26 +37,15 @@ export interface ThemeSwitcherProps {
   readonly easing?: EasingType;
 }
 
-// Discriminated union: TypeScript enforces themeValue type based on themeType
-export type IThemeOptions =
-  | {
-      themeType: "mode";
-      themeValue: Mode;
-      touchX?: number;
-      touchY?: number;
-      animationType?: AnimationType;
-      animationDuration?: number;
-      easing?: EasingType;
-    }
-  | {
-      themeType: "palette";
-      themeValue: PaletteName;
-      touchX?: number;
-      touchY?: number;
-      animationType?: AnimationType;
-      animationDuration?: number;
-      easing?: EasingType;
-    };
+/** Options for animated palette switch. Only `themeValue` is required. */
+export interface IThemeOptions {
+  themeValue: PaletteName;
+  touchX?: number;
+  touchY?: number;
+  animationType?: AnimationType;
+  animationDuration?: number;
+  easing?: EasingType;
+}
 
 export interface IThemeAnimation {
   type: AnimationType;
@@ -67,7 +55,6 @@ export interface IThemeAnimation {
 
 export interface AnimatedThemeProviderProps {
   children: ReactNode;
-  readonly defaultMode?: Mode;
   readonly defaultPalette?: PaletteName;
   readonly onAnimationStart?: () => void;
   readonly onAnimationComplete?: () => void;

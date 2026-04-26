@@ -6,17 +6,13 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { createTheme, type Theme, type Mode } from "./createTheme";
+import { createTheme, type Theme } from "./createTheme";
 import type { PaletteName } from "./palettes";
 
 type ThemeContextType = {
   theme: Theme;
-  mode: Mode;
   palette: PaletteName;
-  setMode: (mode: Mode) => void;
   setPalette: (palette: PaletteName) => void;
-  isDark: boolean;
-  isLight: boolean;
 };
 
 export const ThemeContext = createContext<ThemeContextType | undefined>(
@@ -26,19 +22,15 @@ export const ThemeContext = createContext<ThemeContextType | undefined>(
 export const ThemeProvider = memo(
   ({
     children,
-    defaultMode = "dark",
-    defaultPalette = "Neutral",
+    defaultPalette = "NeutralDark",
   }: {
     children: React.ReactNode;
-    defaultMode?: Mode;
     defaultPalette?: PaletteName;
   }) => {
-    const [mode, setModeState] = useState<Mode>(defaultMode);
     const [palette, setPaletteState] = useState<PaletteName>(defaultPalette);
 
-    const theme = useMemo(() => createTheme(palette, mode), [palette, mode]);
+    const theme = useMemo(() => createTheme(palette), [palette]);
 
-    const setMode = useCallback((newMode: Mode) => setModeState(newMode), []);
     const setPalette = useCallback(
       (newPalette: PaletteName) => setPaletteState(newPalette),
       [],
@@ -47,14 +39,10 @@ export const ThemeProvider = memo(
     const value = useMemo(
       () => ({
         theme,
-        mode,
         palette,
-        setMode,
         setPalette,
-        isDark: mode === "dark",
-        isLight: mode === "light",
       }),
-      [theme, mode, palette, setMode, setPalette],
+      [theme, palette, setPalette],
     );
 
     return (

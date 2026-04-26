@@ -12,7 +12,7 @@ import { getAllWorkoutDays } from "../../db/workout.repository";
 import { WorkoutDay } from "../../types/WorkoutDay";
 
 const HomeScreen = ({ navigation }: any) => {
-  const { setMode, setPalette } = useTheme();
+  const { setPalette } = useTheme();
   const [days, setDays] = useState<WorkoutDay[]>([]);
   const [sheetVisible, setSheetVisible] = useState(false); // control bottom sheet visibility
   useEffect(() => {
@@ -36,12 +36,9 @@ const HomeScreen = ({ navigation }: any) => {
       <Button title="Test" onPress={() => navigation.navigate("Test")} />
       <Button title="Test2" onPress={() => navigation.navigate("Test2")} />
 
-      <Button title="Dark" onPress={() => setMode("dark")} />
-      <Button title="Light" onPress={() => setMode("light")} />
-      <Button title="Zinc" onPress={() => setPalette("Zinc")} />
       <Button title="Emerald" onPress={() => setPalette("Emerald")} />
-      <Button title="Neutral" onPress={() => setPalette("Neutral")} />
-
+      <Button title="NeutralDark" onPress={() => setPalette("NeutralDark")} />
+      <Button title="NeutralLight" onPress={() => setPalette("NeutralLight")} />
       <EditWorkoutDayBottomSheet
         visible={sheetVisible}
         onClose={() => setSheetVisible(false)}

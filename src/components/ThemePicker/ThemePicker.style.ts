@@ -6,13 +6,14 @@ export const createStyles = (colors: Theme) =>
     wrapper: {
       position: "absolute",
       top: 40,
+      left: 30,
       zIndex: 999,
     },
     container: {
       position: "absolute",
       top: 0,
       left: 0,
-      backgroundColor: colors.text.muted,
+      backgroundColor: colors.bg.tertiary,
       alignSelf: "flex-start",
       overflow: "hidden", // 🔥 this is what makes it feel like ONE shape
       paddingHorizontal: 10,
@@ -35,6 +36,7 @@ export const createStyles = (colors: Theme) =>
       height: 30,
       borderRadius: 999,
       backgroundColor: colors.bg.tertiary,
+      borderWidth: 2,
     },
 
     activeCircle: {

@@ -11,11 +11,7 @@ import { ExerciseWithSets } from "../../types/ExerciseWithSets";
 import { getWorkoutDayFull } from "../../db/exercise.repository";
 
 import { CountupTimer } from "../../reactitcx_Components/CountUpTimer/CountupTimer";
-import {
-  useToggleTheme,
-  useTheme,
-  AnimationType,
-} from "../../components/ThemeSwitch";
+import { useToggleTheme, AnimationType } from "../../components/ThemeSwitch";
 
 const WorkoutDayScreen = ({ route }: any) => {
   const colors = useColors();
@@ -56,7 +52,6 @@ const WorkoutDayScreen = ({ route }: any) => {
     );
   };
 
-  const { isDark, palette } = useTheme();
   const toggleTheme = useToggleTheme();
 
   if (loading) return null;
@@ -90,28 +85,13 @@ const WorkoutDayScreen = ({ route }: any) => {
             />
           ))}
 
-          <Pressable
-            style={{ backgroundColor: "green", width: 50, height: 50 }}
-            onPress={(e) =>
-              toggleTheme({
-                themeType: "mode",
-                themeValue: isDark ? "light" : "dark",
-                animationType: isDark
-                  ? AnimationType.CircularInverted
-                  : AnimationType.Circular,
-                touchX: e.nativeEvent.pageX,
-                touchY: e.nativeEvent.pageY,
-              })
-            }
-          />
-
+      
           {/* Switch palette */}
           <Pressable
             style={{ backgroundColor: "blue", width: 50, height: 50 }}
             onPress={() =>
               toggleTheme({
-                themeType: "palette",
-                themeValue: "Violet",
+                themeValue: "Emerald",
                 animationType: AnimationType.Wipe,
               })
             }
@@ -121,8 +101,7 @@ const WorkoutDayScreen = ({ route }: any) => {
             style={{ backgroundColor: "red", width: 50, height: 50 }}
             onPress={() =>
               toggleTheme({
-                themeType: "palette",
-                themeValue: "Neutral",
+                themeValue: "NeutralDark",
                 animationType: AnimationType.Wipe,
               })
             }
